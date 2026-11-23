@@ -102,7 +102,11 @@ Seguir a ordem natural de dependência:
 - **User Story:** `US-AGENTES-02` — Profundização no manejo de erros da API
 - **Pacote SDD:** `sdd-02-error-handling`
 - **Artefatos criados:** `USER-STORY`, `USE-CASE`, `TEST-CASE` (ver pasta `docs/sdd/02-error-handling/`)
-- **Próximos passos:** Adicionar campos `code` e `validationErrors` ao `ApiError`; criar tipos de erro específicos (`NETWORK_ERROR`, `VALIDATION_ERROR`, `CONSTRAINT_ERROR`, `AUTHORIZATION_ERROR`); adicionar wrapping de erro em operações DB críticas
+- **Status:** 🟡 Concluído (core implementation complete)
+- **Próximos passos (pendentes):** 
+  - Integrar o novo tipo `ApiErrorCode` em todos os componentes que lançam erros de API
+  - Adicionar wrapping de erro em operações DB críticas em `server/db.ts` (já tentou, requer refatoração adicional)
+  - Criar testes unitários para cenários de erro
 
 ### `IMPROV-03` — Component Size
 - **User Story:** `US-AGENTES-03` — Redução de tamanho de componentes
