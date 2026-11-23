@@ -112,7 +112,9 @@ Seguir a ordem natural de dependência:
 - **User Story:** `US-AGENTES-03` — Redução de tamanho de componentes
 - **Pacote SDD:** `sdd-03-component-size`
 - **Artefatos criados:** `USER-STORY`, `USE-CASE`, `TEST-CASE` (ver pasta `docs/sdd/03-component-size/`)
-- **Próximos passos:** Decompor `BoardFunnelView.tsx` (~43KB) em sub-componentes (`BoardHeader`, `BoardColumns`, `BoardFooter`); decompor `SessionsView.tsx` (~22KB) em `SessionList`, `SessionFilter`, `SessionDetails`; decompor `UsersAdminView.tsx` (~21KB) em `UserTable`, `UserForm`, `UserActions`; verificar que performance não se degrada
+- **Status:** 🟡 Em desenvolvimento
+- **Responsável:** Time Tech
+- **Próximos passos:** Decompor `BoardFunnelView.tsx` (~43KB) em sub-componentes (`BoardHeader`, `BoardColumns`, `BoardFooter`, `MatrixLink`); decompor `SessionsView.tsx` (~22KB) em `SessionList`, `SessionFilter`, `SessionDetails`; decompor `UsersAdminView.tsx` (~21KB) em `UserTable`, `UserForm`, `UserActions`; verificar que performance não se degrada
 
 ### `IMPROV-04` — Hardcoded Values
 - **User Story:** `US-AGENTES-04` — Extração de valores mágicos para constantes
