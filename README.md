@@ -7,7 +7,9 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-4.21-000000?style=for-the-badge&logo=express&logoColor=white)
 ![WebSocket](https://img.shields.io/badge/WebSocket-ws_8-010101?style=for-the-badge&logo=socketdotio&logoColor=white)
-![SQLite](https://img.shields.io/badge/SQLite-better--sqlite3-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![Kysely](https://img.shields.io/badge/Kysely-ORM_Adapter-2563EB?style=for-the-badge)
+![SQLite](https://img.shields.io/badge/SQLite-DEV_(better--sqlite3)-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-PRD_(pg)-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Motion](https://img.shields.io/badge/Motion-12-FFF312?style=for-the-badge&logo=framer&logoColor=0B1220)
 ![Lucide](https://img.shields.io/badge/Lucide-Icons-F56565?style=for-the-badge&logo=lucide&logoColor=white)
 ![jsPDF](https://img.shields.io/badge/jsPDF-4.2-EC1C24?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)
@@ -44,7 +46,7 @@ Aplicação colaborativa em tempo real para condução de sessões de inovação
 | **Tempo Real** | `ws` (`/ws`) | Presença ao vivo, cursores efêmeros e sincronização de cards/votação |
 | **Frontend SPA** | React 19 + TypeScript 7 + Vite 8 | Interface reativa em `middlewareMode` com animações `motion` |
 | **Design System** | Tailwind CSS v4 + `docs/DESIGN.md` | Tokens extraídos via `sdd-extract-site-design` (`roche.com`), tipografia `Outfit`, `Plus Jakarta Sans` e `JetBrains Mono` (`tabular-nums`) |
-| **Persistência** | SQLite (`better-sqlite3`) | Transações síncronas ACID em `db/db.ts` (`db/innovation-board.db`) |
+| **Persistência (`APP_ENV`)** | Kysely (`kysely`) + SQLite (`DEV`) / PostgreSQL (`PRD`) | Adapter multi-dialeto em `db/kysely.ts` (`APP_ENV=DEV` → `better-sqlite3` em `db/innovation-board.db`; `APP_ENV=PRD` → PostgreSQL via `pg.Pool`) |
 | **Exportação** | `jspdf` + gerador CSV UTF-8 BOM | Relatórios executivos client-side do ranking Top 5 |
 
 ---

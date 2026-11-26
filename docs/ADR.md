@@ -12,6 +12,7 @@
 | **ADR-01** | Problema ao iniciar servidor Node.js | ✅ Resolvido | Problemas de importação e estrutura de transação no `db.ts` |
 | **ADR-02** | [Próxima ADR] | — | — |
 | **ADR-05** | Processo de Lint e Build Automatizado | ✅ Concluído | Erros de lint/build, reestruturação de componentes e script automatizado |
+| **ADR-008** | 2026-11-26 — Persistência Dual com Adapter Kysely (`APP_ENV=DEV` SQLite · `APP_ENV=PRD` PostgreSQL) | Aceita | Seleção dinâmica de banco via `.env` com schema tipado único em Kysely |
 
 ---
 
@@ -132,4 +133,17 @@ open http://localhost:3000
 | **ADR-005** | Processo de Lint e Build Automatizado | ✅ Concluído |
 
 ---
-*Documento gerado via skill `architecture-decision-records` / ADR padrão. Para novas ADRs, sugerido criar em `docs/adrs/ADR-NN-titulo-resumido.md` seguindo este padrão.*
+
+### ADR-008
+- **Data:** 2026-11-26
+- **Status:** Aceita
+- **Assunto:** Persistência Dual com Adapter Kysely (`APP_ENV=DEV` em SQLite · `APP_ENV=PRD` em PostgreSQL)
+- **Contexto:** O ambiente de desenvolvimento local requer agilidade e zero dependência externa com SQLite embarcado (`better-sqlite3`), enquanto o ambiente produtivo/nuvem (`APP_ENV=PRD`) exige persistência relacional centralizada em PostgreSQL (`og1dev.postgresql.dbaas.com.br` / `pg.Pool`) parametrizada por variáveis de ambiente no `.env`, sem duplicar o schema das 7 tabelas nem quebrar a tipagem TypeScript (`tsc --noEmit`) ou as regras transacionais e de auditoria (`RN-06.2`).
+- **Alternativas:** Prisma ORM (descartada: `provider` fixo em tempo de geração do client, inviabilizando alternância em runtime via `APP_ENV`) · Drizzle ORM (descartada: separação estrita entre `sqliteTable` e `pgTable`, exigindo duplicação das 7 tabelas ou *type-casting* entre `BetterSQLite3Database` e `NodePgDatabase`) · SQL manual dual sem query builder (descartada: alto risco de divergência de placeholders `?` vs `$1..$n` e menor segurança de tipos) · **Kysely ORM Adapter com `SqliteDialect` + `PostgresDialect` (escolhida)**
+- **Decisão:** Adotar o **Kysely** (`Kysely<DatabaseSchema>`) em `db/schema.ts` e `db/kysely.ts`, integrado a `db/db.ts` e `server.ts`, selecionando o motor em runtime pela variável `APP_ENV`: (1) quando `APP_ENV=DEV` (padrão), utiliza `SqliteDialect` sobre `better-sqlite3` (`SQLITE_DB_PATH` / `db/innovation-board.db`); (2) quando `APP_ENV=PRD`, valida em modo *fail-fast* as variáveis PostgreSQL (`DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_SSL`, `DB_POOL_MAX` ou `DATABASE_URL`), instancia `PostgresDialect` com `pg.Pool`, garante a criação idempotente das 7 tabelas no PostgreSQL, hidrata o estado na inicialização (`initDatabaseAdapter()`), replica mutações parametrizadas para o PostgreSQL, expõe o diagnóstico em `GET /api/health` e disponibiliza o script de verificação `src/test/db-test-postgresql.ts` (`npm run test:db:pg`).
+- **Consequências:** + schema TypeScript único (`DatabaseSchema`) compartilhado entre SQLite e PostgreSQL com zero erros no `tsc --noEmit`, alternância imediata via `.env`, validação *fail-fast* de segredos/conexão em `PRD` e preservação integral da trilha de auditoria `audit_logs` / − adiciona as dependências `kysely` e `pg` (`@types/pg`) e requer sincronização das colunas no `DatabaseSchema` em futuras evoluções de modelo
+- **Substitui:** — (complementa e evolui `ADR-002` de `docs/SAD.md` §5)
+- **Pacotes SDD impactados:** `docs/sdd/01-auth-unification/` (e transversal a todos os pacotes que persistem nas 7 tabelas de `docs/DATABASE-PATTERN.md`)
+
+---
+*Documento gerado via skill `sdd-adr-writer` (append-only).*

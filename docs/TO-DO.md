@@ -34,7 +34,7 @@ Mapeamento de `RFs` do `PRD.md` para pacotes `docs/sdd/NN-slug/` e IDs de rastre
 
 | RF do PRD | Pacote SDD | User Story | Use Case | Test Case |
 |-----------|------------|------------|----------|-----------|
-| `[RF-01]` Autenticação Híbrida e Unificação de Conta por E-mail | `sdd-01-auth-unification` | `US-01` | `UC-01` | `TC-01.01` a `TC-01.03` |
+| `[RF-01]` Autenticação Híbrida e Unificação de Conta por E-mail | `sdd-01-auth-unification` | `US-01` | `UC-01` | `TC-01.01` a `TC-01.08` |
 | `[RF-02]` Cadastro Interno de Usuários e Carga Idempotente | `sdd-02-user-management` | `US-02` | `UC-02` | `TC-02.01` a `TC-02.03` |
 | `[RF-03]` Painel Colaborativo, Grade Compacta e Página de Matriz | `sdd-03-collaborative-board` | `US-03` | `UC-03` | `TC-03.01` a `TC-03.05` |
 | `[RF-04]` Cartões Estruturados de Ideia (Pitch + Refinamento) | `sdd-04-idea-cards` | `US-04` | `UC-04` | `TC-04.01` a `TC-04.04` |
@@ -50,7 +50,7 @@ Mapeamento de `RFs` do `PRD.md` para pacotes `docs/sdd/NN-slug/` e IDs de rastre
 
 | Prioridade | Pacote SDD | Título Resumido | Responsável | Status |
 |------------|------------|-----------------|-------------|--------|
-| **Alta** | `sdd-01-auth-unification` | Unificação de autenticação híbrida | Time Tech | 🟡 Em análise |
+| **Alta** | `sdd-01-auth-unification` | Unificação de autenticação híbrida | Time Tech | 🟢 Spec Aprovada (`US-01`, `UC-01`, `TC-01.01..08`) |
 | **Alta** | `sdd-03-collaborative-board` | Painel colaborativo grade 2×2 | Time Tech | 🟡 Em análise |
 | **Alta** | `sdd-04-idea-cards` | Cartões estruturados de ideia | Time Tech | 🟡 Em análise |
 | **Média** | `sdd-05-stage-gate` | Trava de qualidade 3/3 para Backlog | Time Tech | ⚪ Pendente |

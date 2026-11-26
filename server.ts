@@ -6,13 +6,17 @@ import { WebSocket, WebSocketServer } from 'ws';
 import {
   appendAuditLog,
   appendSessionCardActivity,
+  closeDatabaseAdapter,
   createNewVotingSession,
   db,
+  dbConfig,
   getAllPinsByCard,
   getPinsForCard,
   getVotingSessions,
   getVotingState,
   hashPassword,
+  initDatabaseAdapter,
+  kysely,
   normalizeEmail,
   saveVotingState,
   seedAdditionalPitchCardsOnce,
@@ -2214,7 +2218,12 @@ app.get('/api/audit', requireAuth, (req: AuthedRequest, res) => {
 });
 
 app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok' });
+  res.json({
+    status: 'ok',
+    appEnv: dbConfig.appEnv,
+    database: dbConfig.engine,
+    orm: 'kysely',
+  });
 });
 
 // ============================================================================
@@ -2231,6 +2240,8 @@ function getCliArg(flag: string): string | undefined {
 }
 
 async function startServer() {
+  await initDatabaseAdapter();
+  void kysely;
   const isProd = process.env.NODE_ENV === 'production';
   let viteServer: { close: () => Promise<void> } | null = null;
 
@@ -2285,12 +2296,9 @@ async function startServer() {
       Promise.resolve(viteServer?.close())
         .catch(() => {})
         .finally(() => {
-          try {
-            db.close();
-          } catch {
-            // Ignore close error
-          }
-          process.exit(0);
+          closeDatabaseAdapter().finally(() => {
+            process.exit(0);
+          });
         });
     });
     setTimeout(() => process.exit(0), 2000).unref();

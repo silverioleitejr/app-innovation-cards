@@ -88,7 +88,7 @@ A skill lerá o `SAD.md`, tentará iniciar os serviços e emitirá um relatório
 | **Exportação de Relatórios** | `jspdf` + gerador CSV UTF-8 BOM | jsPDF 4.x | Geração client-side de relatórios executivos `.pdf` (A4) e planilhas `.csv` dos Top 5 |
 | **Backend HTTP** | Express | Express 4.x | API REST autenticada (`/api/*`), controle RBAC, validações de domínio e transações |
 | **Tempo Real** | `ws` (`WebSocketServer` em `/ws`) | ws 8.x | Broadcast de presença, cursores efêmeros, mutações de cartões, pins e estado de votação/sessões |
-| **Persistência** | SQLite embarcado (`better-sqlite3`) | `better-sqlite3` 13.x | Armazenamento relacional local transacional ACID (`data/innovation-board.db`) |
+| **Persistência & ORM Adapter** | Kysely (`kysely`) + SQLite (`better-sqlite3`) / PostgreSQL (`pg`) | `kysely` 0.29.x / `better-sqlite3` 13.x / `pg` 8.x | Adapter multi-dialeto controlado por `APP_ENV`: `DEV` usa SQLite local (`db/innovation-board.db` via `SqliteDialect`) e `PRD` usa PostgreSQL (`PostgresDialect`) |
 
 ---
 
@@ -192,10 +192,10 @@ A aplicação adota uma arquitetura **monolítica modular full-stack** servida p
 - **Decisão:** Servir a SPA React (via middleware Vite em dev e arquivos estáticos `dist/` em produção), a API REST `/api/*` e o WebSocket `/ws` no mesmo `http.Server`.
 - **Consequência:** Elimina problemas de CORS, simplifica o deploy (`npm run build` + `node server.ts`) e garante compatibilidade total com iframes e proxies corporativos.
 
-### ADR-002 — Persistência SQLite Embarcada com Transações Síncronas ACID
-- **Contexto:** Workshops colaborativos exigem mutações rápidas, atomicidade entre dados e auditoria (`RN-06.2`) e baixa sobrecarga operacional no MVP.
-- **Decisão:** Utilizar `better-sqlite3` com transações síncronas para operações compostas (ex.: toggle de pin + atualização de sessão + log de auditoria, carga em lote tudo-ou-nada) e `journal_mode = DELETE` com `quick_check` na inicialização.
-- **Consequência:** Zero latência de rede até o banco, transações atômicas simples e previsíveis; evolução futura para PostgreSQL requer apenas substituição da camada `server/db.ts`.
+### ADR-002 — Persistência Dual com Adapter Kysely (`APP_ENV=DEV` em SQLite · `APP_ENV=PRD` em PostgreSQL)
+- **Contexto:** O ambiente de desenvolvimento local exige zero configuração externa e mutações rápidas com SQLite embarcado (`better-sqlite3`), enquanto o ambiente produtivo/nuvem (`APP_ENV=PRD`) requer banco relacional gerenciado PostgreSQL (`pg.Pool`) configurado por variáveis de ambiente (`DATABASE_URL` ou `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_SSL`).
+- **Decisão:** Adotar o **Kysely** (`Kysely<DatabaseSchema>` em `db/schema.ts` e `db/kysely.ts`) como adapter oficial multi-dialeto: quando `APP_ENV=DEV` (padrão), utiliza `SqliteDialect` sobre `db/innovation-board.db`; quando `APP_ENV=PRD`, exige configuração PostgreSQL (*fail-fast*), instancia `PostgresDialect` com `pg.Pool`, garante a criação idempotente das 7 tabelas no PostgreSQL, hidrata o estado inicial na subida e replica mutações parametrizadas para o PostgreSQL.
+- **Consequência:** Mantém uma única definição tipada das 7 tabelas (`DatabaseSchema`), preserva compatibilidade total com `tsc --noEmit` e com as transações síncronas/auditoria em `DEV`, e habilita persistência PostgreSQL em `PRD` apenas alternando `APP_ENV` no `.env`.
 
 ### ADR-003 — Desabilitação Completa do WebSocket HMR do Vite (`hmr: false, ws: false` + Plugin `disable-vite-client-ws`)
 - **Contexto:** No Vite 8 em `middlewareMode`, desabilitar apenas `hmr: false` ainda abria um servidor WebSocket auxiliar na porta `24678`, e mesmo com `ws: false` o script `/@vite/client` ainda tentava abrir uma conexão WebSocket para a porta `24678`, provocando rejeições não tratadas (`WebSocket closed without opened.`) no navegador.

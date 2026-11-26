@@ -20,13 +20,41 @@ import type {
   VotingSessionRecord,
   VotingState,
 } from '../src/types.ts';
+import {
+  closeKyselyAdapter,
+  createKyselyAdapter,
+  initializePostgresIfPrd,
+  replicateMutationToPostgresIfPrd,
+  resolveDatabaseConfig,
+} from './kysely.ts';
 
-const dataDir = path.resolve(process.cwd(), 'db');
+export const dbConfig = resolveDatabaseConfig();
+
+const dbPath = path.isAbsolute(dbConfig.sqlitePath)
+  ? dbConfig.sqlitePath
+  : path.resolve(process.cwd(), dbConfig.sqlitePath);
+const dataDir = path.dirname(dbPath);
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
 }
 
-const dbPath = path.join(dataDir, 'innovation-board.db');
+function attachKyselyPrdReplication(instance: Database.Database): Database.Database {
+  if (dbConfig.appEnv !== 'PRD') {
+    return instance;
+  }
+  const originalPrepare = instance.prepare.bind(instance);
+  instance.prepare = ((source: string) => {
+    const stmt = originalPrepare(source);
+    const originalRun = stmt.run.bind(stmt);
+    stmt.run = ((...params: unknown[]) => {
+      const result = originalRun(...params);
+      replicateMutationToPostgresIfPrd(source, params);
+      return result;
+    }) as typeof stmt.run;
+    return stmt;
+  }) as typeof instance.prepare;
+  return instance;
+}
 
 function openDatabase(): Database.Database {
   const tryOpen = () => {
@@ -39,7 +67,7 @@ function openDatabase(): Database.Database {
     }
     instance.pragma('journal_mode = DELETE');
     instance.pragma('foreign_keys = ON');
-    return instance;
+    return attachKyselyPrdReplication(instance);
   };
 
   try {
@@ -61,6 +89,20 @@ function openDatabase(): Database.Database {
 }
 
 export const db = openDatabase();
+export const { kysely } = createKyselyAdapter(db);
+
+export async function initDatabaseAdapter(): Promise<void> {
+  await initializePostgresIfPrd(kysely, db, dbConfig);
+}
+
+export async function closeDatabaseAdapter(): Promise<void> {
+  await closeKyselyAdapter();
+  try {
+    db.close();
+  } catch {
+    // Ignore close error
+  }
+}
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS users (
