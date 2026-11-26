@@ -16,7 +16,7 @@
 
 Siga **exclusivamente** a ordem canônica definida em `docs/GUIDELINE.md` §4.
 
-Não duplique a lista neste arquivo. `docs/GLOSSARIO.md` não entra nessa ordem: é apoio de vocabulário, lido quando a tarefa usar um termo de domínio.
+Não duplique a lista neste arquivo. `docs/GLOSSARY.md` não entra nessa ordem: é apoio de vocabulário, lido quando a tarefa usar um termo de domínio.
 
 ---
 
@@ -28,7 +28,7 @@ Não duplique a lista neste arquivo. `docs/GLOSSARIO.md` não entra nessa ordem:
 - **Metodologia:** SDD conforme `GUIDELINE.md`.
 - **Nomes:**
   - IDs (`RF-NN`, `CA-NN`, `RN-NN.x`, `US-NN`, `CAU-NN.x`, `UC-NN`, `RU-NN.x`, `TC-NN.MM`, `ADR-NNN`) seguem o `GUIDELINE.md` §3.
-  - Palavra de domínio segue o `docs/GLOSSARIO.md` §3, quando o arquivo existir.
+  - Palavra de domínio segue o `docs/GLOSSARY.md` §3, quando o arquivo existir.
   - Termo que não está no glossário: perguntar. Não criar sinônimo.
 
 ---
@@ -134,6 +134,7 @@ Na cópia inicial, a coluna Publicada fica `não`. Mude para `sim` só depois qu
 | frontend-design | frontend-design/SKILL.md | sim |
 | migrate-radix-to-base | migrate-radix-to-base/SKILL.md | sim |
 | python-backend-architecture | python-backend-architecture/SKILL.md | sim |
+| sdd-extract-site-design | sdd-extract-site-design/SKILL.md | sim |
 | shadcn | shadcn/SKILL.md | sim |
 | skill-creator | skill-creator/SKILL.md | sim |
 | ux-ascii-designer | ux-ascii-designer/SKILL.md | sim |

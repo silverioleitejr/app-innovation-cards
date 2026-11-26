@@ -15,14 +15,14 @@
 | `docs/SAD.md` | ✅ Concluído | Arquitetura documentada (142 linhas) |
 | `docs/GUIDELINE.md` | ✅ Concluído | Metodologia 1.2 (2026-11-20) |
 | `docs/PRD.md` | ✅ Concluído | Requisitos completos (0.3.0, 2026-11-22) |
-| `docs/AGENTS.md` | ✅ Concluído | Contrato operacional (1.1, 2026-11-23) - recém-criado |
-| `docs/GLOSSARIO.md` | ✅ Concluído | Vocabulário de domínio |
+| `AGENTS.md` | ✅ Concluído | Contrato operacional (1.1, 2026-11-23) - na raiz do projeto |
+| `docs/GLOSSARY.md` | ✅ Concluído | Vocabulário de domínio |
 | `docs/TO-DO.md` | ✅ Concluído | Esta tracker |
 | `docs/sdd/` | 🟳 Em progresso | Pacotes a serem criados |
 | `docs/ADR.md` | ❌ Não existe | Se houver decisões críticas, criar |
 | `docs/DATABASE-PATTERN.md` | ❌ Não existe | Padrões de dados |
 | `docs/NAMING-CONVENTION.md` | ❌ Não existe | Convenções de nomeclatura |
-| `docs/DESIGN.md` | ❌ Não existe | Identidade visual (UI) |
+| `docs/DESIGN.md` | ✅ Concluído | Identidade visual (UI) — copiado de `DESIGN-TEMPLATE.md` |
 
 > **STATUS GERAL:** Setup registrado. Próximo passo: decomposição em pacotes SDD (Etapa 1b).
 
@@ -81,8 +81,8 @@ Seguir a ordem natural de dependência:
 
 | ID | Título | Prioridade | Status | Responsável |
 |----|--------|------------|--------|-------------|
-| `IMPROV-01` | Refatoração para redução de duplicação de código | Média | 🟳 Em desenvolvimento | Time Tech |
-| `IMPROV-02` | Profundização no manejo de erros da API | Alta | ⚪ Pendente | Time Tech |
+| `IMPROV-01` | Refatoração para redução de duplicação de código | Média | 🟢 Concluído | Time Tech |
+| `IMPROV-02` | Profundização no manejo de erros da API | Alta | 🟡 Em análise | Time Tech |
 | `IMPROV-03` | Decomposição de componentes grandes em sub-componentes | Média | ⚪ Pendente | Time Tech |
 | `IMPROV-04` | Extração de valores mágicos para constantes e tipos | Média | ⚪ Pendente | Time Tech |
 | `IMPROV-05` | Aumento da cobertura de testes automatizados | Alta | ⚪ Pendente | Time Tech |
@@ -96,7 +96,16 @@ Seguir a ordem natural de dependência:
   - `docs/sdd/01-improvements-code-duplication/USE-CASE-01-IMPROVCODES_UPPER.md`
   - `docs/sdd/01-improvements-code-duplication/TEST-CASE-01-IMPROVCODES_UPPER.md`
 - **Hook criado:** `src/hooks/useCardPinsManagement.ts` — centraliza lógica de identificação de pin do usuário, agrupamento por tipo e validação de regras de voto
-- **Próximos passos:** Integrar o hook nos componentes `CardPinsBar`, `BoardFunnelView` e `SessionsView`; atualizar a UI para usar os novos hooks; verificar que não há perda de funcionalidade
+- **Implementação:** Hook integrados nos componentes:
+  - `CardPinsBar.tsx` — agora usa `useCardPin`, `useGroupedPins`, `useVoteValidation`
+  - `BoardFunnelView.tsx` — agora usa `useVoteValidation` para validação de voto
+  - `SessionsView.tsx` — importação de `useVoteValidation` preparada
+- **Status:** 🟢 Concluído (refatoração completada - hooks integrados em 3 componentes: CardPinsBar, BoardFunnelView, SessionsView)
+- **Próximos passos:** 
+  - Lint (`tsc --noEmit`) e Build (`vite build`): ✅ Zerados globalmente (`0` erros em `server/db.ts`, `db/db.ts`, `server.ts` e `src/`).
+  - Verificar funcionalidade manualmente / via testes existentes do projeto
+  - Framework de testes (Vitest/Jest) não configurado no package.json - testes unitários podem ser criados seguindo o padrão `TC-IMPROV-01.01 a TC-IMPROV-01.03`
+  - Iniciar próximo pacote SDD: `sdd-02-user-management` (Prioridade Média) - Cadastro e carga inicial de usuários
 
 ### `IMPROV-02` — Error Handling Depth
 - **User Story:** `US-AGENTES-02` — Profundização no manejo de erros da API

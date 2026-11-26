@@ -4,8 +4,8 @@
 > **Autor:** Silverio Leite Jr  
 > **Versão:** 0.1.0  
 > **Data:** 2026-11-19  
-> **Status:** Draft  
-> **Aprovado por:** — · **Data de Aprovação:** —
+> **Status:** Aprovado  
+> **Aprovado por:** Silverio Leite Jr · **Data de Aprovação:** 2026-11-25
 
 > **Projeto:** SDD Project Bootstrapper  
 > **Pacote SDD:** `docs/sdd/01-abrir-workspace/`  

@@ -15,14 +15,14 @@
 | `docs/SAD.md` | ✅ Concluído | Arquitetura documentada (142 linhas) |
 | `docs/GUIDELINE.md` | ✅ Concluído | Metodologia 1.2 (2026-11-20) |
 | `docs/PRD.md` | ✅ Concluído | Requisitos completos (0.3.0, 2026-11-22) |
-| `docs/AGENTS.md` | ✅ Concluído | Contrato operacional (1.1, 2026-11-23) - recém-criado |
-| `docs/GLOSSARIO.md` | ✅ Concluído | Vocabulário de domínio |
+| `AGENTS.md` | ✅ Concluído | Contrato operacional (1.1, 2026-11-23) - na raiz do projeto |
+| `docs/GLOSSARY.md` | ✅ Concluído | Vocabulário de domínio |
 | `docs/TO-DO.md` | ✅ Concluído | Esta tracker |
-| `docs/sdd/` | 🟳 Em progresso | Pacotes a serem criados |
+| `docs/sdd/` | ✅ Concluído | Pacotes SDD estruturados (9 pacotes) |
 | `docs/ADR.md` | ❌ Não existe | Se houver decisões críticas, criar |
 | `docs/DATABASE-PATTERN.md` | ❌ Não existe | Padrões de dados |
 | `docs/NAMING-CONVENTION.md` | ❌ Não existe | Convenções de nomeclatura |
-| `docs/DESIGN.md` | ❌ Não existe | Identidade visual (UI) |
+| `docs/DESIGN.md` | ✅ Concluído | Identidade visual (UI) — copiado de `DESIGN-TEMPLATE.md` |
 
 > **STATUS GERAL:** Setup registrado. Próximo passo: decomposição em pacotes SDD (Etapa 1b).
 

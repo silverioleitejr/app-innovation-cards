@@ -1,0 +1,183 @@
+# sdd-improvements — Planos de Melhoria de Código
+
+## Visão Geral
+
+Este documento planeia 5 atividades de melhoria de código identificadas na análise estática do Innovation Board. Cada atividade seguirá a metodologia SDD com User Stories, Use Cases e Test Cases rastreados em `TO-DO.md`.
+
+---
+
+## 1. Code Duplication Potential
+
+### User Story
+`US-IMPROV-01` — Como desenvolvedor, quero extrair padrões de duplicação de código em componentes compartilhados, para que o mantenha seja mais simples e consistente.
+
+### Acceptance Criteria
+- [ ] Identificar padrões repetidos em componentes (pin management, card editing)
+- [ ] Criar hooks compartilhados para padrões comuns
+- [ ] Atualizar componentes afetados para usar os novos hooks
+- [ ] Verificar que não há perda de funcionalidade
+- [ ] Atualizar `TO-DO.md` com conclusão
+
+### Test Cases
+| ID | Descrição | Esperado |
+|----|-----------|----------|
+| `TC-IMPROV-01.01` | Extrair hook de gerenciamento de pins | Hook criado e usado por 2+ componentes |
+| `TC-IMPROV-01.02` | Verificar consistência de pins após refatoração | Comportamento idêntico antes e depois |
+| `TC-IMPROV-01.03` | Testar hook em isolation | Testes unitários passing |
+
+### Implementation Plan
+1. **Explore**: Analisar componentes `CardPinsBar`, `BoardFunnelView`, `SessionsView` para identificar duplicação
+2. **Plan**: Definir hook `useCardPins` ou similar
+3. **Execute**: Criar hook, atualizar componentes, testar
+4. **Verify**: `npm run lint`, testes unitários
+5. **Deliver**: Atualizar `TO-DO.md`
+
+---
+
+## 2. Error Handling Depth
+
+### User Story
+`US-IMPROV-02` — Como desenvolvedor, quero melhorar o manejo de erros na API layer, para que a aplicação forneça mensagens mais precisas e suporte melhor o débatching de erros.
+
+### Acceptance Criteria
+- [ ] Adicionar tipos de erro específicos para cenários de API
+- [ ] Melhorar `ApiError` class com campos adicionais
+- [ ] Garantir que operações DB tenham wrapping de erro adequado
+- [ ] Criar cenários de teste para erros de rede, validação, constraint
+- [ ] Atualizar `TO-DO.md` com conclusão
+
+### Test Cases
+| ID | Descrição | Esperado |
+|----|-----------|----------|
+| `TC-IMPROV-02.01` | Criar erro de validação de campo | `ApiError` com `validationErrors` preenchido |
+| `TC-IMPROV-02.02` | Simular erro de rede fetch | `ApiError` com `code` e `status` corretos |
+| `TC-IMPROV-02.03` | Testar wrapping de erro DB | Erro de constraint tratado corretamente |
+
+### Implementation Plan
+1. **Explore**: Revisar `src/lib/api.ts` e `server/db.ts` para entender padrões atuais
+2. **Plan**: Definir novos tipos de erro e atualizar `ApiError`
+3. **Execute**: Implementar melhorias, adicionar try/catch em operações DB
+4. **Verify**: Testes unitários, verificação de mensagens de erro
+5. **Deliver**: Atualizar `TO-DO.md`
+
+---
+
+## 3. Component Size
+
+### User Story
+`US-IMPROV-03` — Como desenvolvedor, quero decompor componentes grandes em sub-componentes menores, para que o código seja mais manutenível sem perder a funcionalidade da interface dashboard.
+
+### Acceptance Criteria
+- [ ] Identificar componentes > 20KB que se beneficiam de decomposição
+- [ ] Quebrar componentes em sub-partes lógicas
+- [ ] Manter prop interfaces e tipos consistentes
+- [ ] Verificar que rendering performance não se degrada
+- [ ] Atualizar `TO-DO.md` com conclusão
+
+### Test Cases
+| ID | Descrição | Esperado |
+|----|-----------|----------|
+| `TC-IMPROV-03.01` | Decompor `BoardFunnelView.tsx` | Sub-componentes criados, prop-types consistentes |
+| `TC-IMPROV-03.02` | Decompor `SessionsView.tsx` | Sub-componentes criados, navegação consistente |
+| `TC-IMPROV-03.03` | Verificar performance | Lighthouse/performance metrics iguais ou melhores |
+
+### Implementation Plan
+1. **Explore**: Medir tamanho dos componentes e identificar responsabilidades
+2. **Plan**: Definir sub-componentes e interfaces de comunicação
+3. **Execute**: Refatorar componentes, criar sub-componentes
+4. **Verify**: Testes de render, verificação de props
+5. **Deliver**: Atualizar `TO-DO.md`
+
+---
+
+## 4. Hardcoded Values
+
+### User Story
+`US-IMPROV-04` — Como desenvolvedor, quero extrair valores mágicos para constantes/tipos, para que o código seja mais legível e as ranges sejam tipadas corretamente.
+
+### Acceptance Criteria
+- [ ] Identificar valores mágicos no WebSocket cursor handling (0-100 range)
+- [ ] Criar tipos ou constantes para ranges e limites
+- [ ] Atualizar todos os usos para usar as novas constantes
+- [ ] Verificar que não há quebras de funcionalidade
+- [ ] Atualizar `TO-DO.md` com conclusão
+
+### Test Cases
+| ID | Descrição | Esperado |
+|----|-----------|----------|
+| `TC-IMPROV-04.01` | Substituir número mágico por constante | Código usando constante definida |
+| `TC-IMPROV-04.02` | Tipar range do cursor | TypeScript erros eliminados para range 0-100 |
+| `TC-IMPROV-04.03` | Testar limite de cursor | Cursor não ultrapassa 0-100 em condições extremas |
+
+### Implementation Plan
+1. **Explore**: Localizar todos os usos de 0-100 no WebSocket code
+2. **Plan**: Criar tipo `CursorPosition` ou constante `MAX_CURSOR_POSITION`
+3. **Execute**: Substituir usos, tipar corretamente
+4. **Verify**: TypeScript check (`tsc --noEmit`), teste de funcionalidade
+5. **Deliver**: Atualizar `TO-DO.md`
+
+---
+
+## 5. Test Coverage
+
+### User Story
+`US-IMPROV-05` — Como desenvolvedor, quero adicionar testes automatizados para funções puras e componentes críticos, para que a qualidade do código seja verificada continuamente.
+
+### Acceptance Criteria
+- [ ] Criar testes para funções puras em `src/types.ts`: `validateBacklogGate`, `computeTopVotedIdeas`, `getMatrixQuadrant`, `getInitials`
+- [ ] Criar testes para componentes críticos: pin management, voting rules
+- [ ] Configurar framework de teste (Vitest ou Jest)
+- [ ] Garantir cobertura mínima de 80% para funções críticas
+- [ ] Atualizar `TO-DO.md` com conclusão
+
+### Test Cases
+| ID | Função / Componente | Esperado |
+|----|---------------------|----------|
+| `TC-IMPROV-05.01` | `validateBacklogGate` | Todos os cenários (3/3, <3/3, fields missing) |
+| `TC-IMPROV-05.02` | `computeTopVotedIdeas` | Ranking por votos, limite 5, empatado por data |
+| `TC-IMPROV-05.03` | `getMatrixQuadrant` | Os 4 quadrantes (QUICK_WIN, STRATEGIC, CONTINUOUS, ICEBOX) |
+| `TC-IMPROV-05.04` | `getInitials` | Nome único, nome simples, nome vazio |
+| `TC-IMPROV-05.05` | Pin voting rules | `Voto +1` rules (sessão aberta, 1 único card, substituição) |
+
+### Implementation Plan
+1. **Explore**: Verificar configuração de testes no `package.json`, estrutura de pastas
+2. **Plan**: Definir framework (Vitest recomendado para Vite/TS), criar arquivos de teste
+3. **Execute**: Criar testes para todas as funções listadas acima
+4. **Verify**: `npm run test` passando, cobertura de código
+5. **Deliver**: Atualizar `TO-DO.md` e fazer commit
+
+---
+
+## Rastreabilidade Cruzada
+
+| ID | Tipo | Relaciona com |
+|----|------|---------------|
+| `US-IMPROV-01` | User Story | Code Duplication |
+| `US-IMPROV-02` | User Story | Error Handling |
+| `US-IMPROV-03` | User Story | Component Size |
+| `US-IMPROV-04` | User Story | Hardcoded Values |
+| `US-IMPROV-05` | User Story | Test Coverage |
+
+| ID | Tipo | Funções/Componentes |
+|----|------|--------------------|
+| `TC-IMPROV-01` | Test Case | Vários hooks/components |
+| `TC-IMPROV-02` | Test Case | ApiError, DB operations |
+| `TC-IMPROV-03` | Test Case | BoardFunnelView, SessionsView |
+| `TC-IMPROV-03` | Test Case | Vários números mágicos |
+| `TC-IMPROV-05` | Test Case | 4 funções puras + regras voting |
+
+---
+
+## Checklist de Conclusão Geral
+
+- [ ] `docs/TO-DO.md` atualizado com todas as atividades IMPROV
+- [ ] Todas as User Stories têm Acceptance Criteria atendidas
+- [ ] Todos os Test Cases passam (`npm run test`)
+- [ ] `npm run lint` e `npm run typecheck` passing
+- [ ] Código seguindo convenções do `AGENTS.md` e `GUIDELINE.md`
+- [ ] Documentação atualizada (README.md, skills no `.agents/skills/`)
+- [ ] Commit e push no repositório
+
+---
+
+*Planejamento criado em 2026-11-23 para melhorias identificadas na análise de código do Innovation Board.*

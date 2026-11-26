@@ -1,6 +1,6 @@
 # Test Case: TC-AGENTES-02.01 a TC-AGENTES-02.04 — Manejo de Erros da API
 
-**Status:** Draft  
+**Status:** Em revisão  
 **Framework:** Vitest / Jest  
 **Relacionado:** `US-AGENTES-02`, `UC-AGENTES-02`
 

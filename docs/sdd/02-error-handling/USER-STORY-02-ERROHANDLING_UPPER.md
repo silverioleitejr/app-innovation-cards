@@ -1,6 +1,6 @@
 # User Story: US-AGENTES-02 — Profundização no Manejo de Erros da API
 
-**Status:** Draft  
+**Status:** Em revisão  
 **Priority:** Alta  
 **Relacionado:** `RF-01`, `RF-02`, `RF-06` (PRD.md)
 

@@ -1,4 +1,23 @@
+# SDD Mandatory Secrets & Local Metadata
 README.ini
 readme.ini
 .env
 .env.*
+!.env.example
+
+# Dependencies & Build Artifacts
+node_modules/
+dist/
+
+# Local SQLite Databases
+data/
+*.db
+*.db-wal
+*.db-shm
+*.db-journal
+
+# Logs & Temporary Runtime Outputs
+*.log
+server_output.txt
+page.txt
+google-ai-studio-innovation-board/

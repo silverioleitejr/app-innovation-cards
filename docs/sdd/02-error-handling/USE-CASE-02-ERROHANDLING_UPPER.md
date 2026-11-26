@@ -1,6 +1,6 @@
 # Use Case: UC-AGENTES-02 — Melhoria no Manejo de Erros da API
 
-**Status:** Draft  
+**Status:** Em revisão  
 **Actor:** Desenvolvedor Frontend e Backend  
 **Preconditions:**  
 - `src/lib/api.ts` e `server/db.ts` acessíveis  

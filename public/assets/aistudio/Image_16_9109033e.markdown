@@ -1,0 +1,218 @@
+---
+name: Agile Deck
+colors:
+  surface: '#fef8f3'
+  surface-dim: '#ded9d4'
+  surface-bright: '#fef8f3'
+  surface-container-lowest: '#ffffff'
+  surface-container-low: '#f8f3ed'
+  surface-container: '#f2ede8'
+  surface-container-high: '#ede7e2'
+  surface-container-highest: '#e7e2dc'
+  on-surface: '#1d1b18'
+  on-surface-variant: '#444655'
+  inverse-surface: '#32302d'
+  inverse-on-surface: '#f5f0eb'
+  outline: '#747686'
+  outline-variant: '#c4c5d7'
+  surface-tint: '#2650da'
+  primary: '#002d9c'
+  on-primary: '#ffffff'
+  primary-container: '#0b41cd'
+  on-primary-container: '#b5c1ff'
+  inverse-primary: '#b8c4ff'
+  secondary: '#625d5d'
+  on-secondary: '#ffffff'
+  secondary-container: '#e6dedd'
+  on-secondary-container: '#676161'
+  tertiary: '#3f3935'
+  on-tertiary: '#ffffff'
+  tertiary-container: '#57504b'
+  on-tertiary-container: '#cdc3bc'
+  error: '#ba1a1a'
+  on-error: '#ffffff'
+  error-container: '#ffdad6'
+  on-error-container: '#93000a'
+  primary-fixed: '#dde1ff'
+  primary-fixed-dim: '#b8c4ff'
+  on-primary-fixed: '#001453'
+  on-primary-fixed-variant: '#0037b9'
+  secondary-fixed: '#e9e1e0'
+  secondary-fixed-dim: '#ccc5c4'
+  on-secondary-fixed: '#1e1b1b'
+  on-secondary-fixed-variant: '#4a4646'
+  tertiary-fixed: '#ebe0da'
+  tertiary-fixed-dim: '#cfc5be'
+  on-tertiary-fixed: '#201b17'
+  on-tertiary-fixed-variant: '#4c4541'
+  background: '#fef8f3'
+  on-background: '#1d1b18'
+  surface-variant: '#e7e2dc'
+typography:
+  headline-display:
+    fontFamily: Outfit
+    fontSize: 56px
+    fontWeight: '200'
+    lineHeight: 64px
+    letterSpacing: -0.03em
+  headline-display-mobile:
+    fontFamily: Outfit
+    fontSize: 36px
+    fontWeight: '300'
+    lineHeight: 44px
+    letterSpacing: -0.02em
+  headline-lg:
+    fontFamily: Outfit
+    fontSize: 40px
+    fontWeight: '200'
+    lineHeight: 48px
+    letterSpacing: -0.02em
+  headline-lg-mobile:
+    fontFamily: Outfit
+    fontSize: 28px
+    fontWeight: '300'
+    lineHeight: 36px
+    letterSpacing: -0.01em
+  headline-md:
+    fontFamily: Outfit
+    fontSize: 28px
+    fontWeight: '300'
+    lineHeight: 36px
+    letterSpacing: -0.01em
+  headline-sm:
+    fontFamily: Outfit
+    fontSize: 20px
+    fontWeight: '400'
+    lineHeight: 28px
+    letterSpacing: 0em
+  body-lg:
+    fontFamily: Inter
+    fontSize: 18px
+    fontWeight: '400'
+    lineHeight: 28px
+    letterSpacing: -0.01em
+  body-md:
+    fontFamily: Inter
+    fontSize: 15px
+    fontWeight: '400'
+    lineHeight: 22px
+    letterSpacing: 0em
+  body-sm:
+    fontFamily: Inter
+    fontSize: 13px
+    fontWeight: '400'
+    lineHeight: 18px
+    letterSpacing: 0.01em
+  label-lg:
+    fontFamily: Inter
+    fontSize: 14px
+    fontWeight: '500'
+    lineHeight: 20px
+    letterSpacing: 0.01em
+  label-md:
+    fontFamily: Inter
+    fontSize: 12px
+    fontWeight: '500'
+    lineHeight: 16px
+    letterSpacing: 0.02em
+  label-sm:
+    fontFamily: Inter
+    fontSize: 11px
+    fontWeight: '600'
+    lineHeight: 14px
+    letterSpacing: 0.04em
+rounded:
+  sm: 0.125rem
+  DEFAULT: 0.25rem
+  md: 0.375rem
+  lg: 0.5rem
+  xl: 0.75rem
+  full: 9999px
+spacing:
+  gutter: 1.5rem
+  gutter-mobile: 0.75rem
+  margin: 2rem
+  margin-mobile: 1rem
+  space-xs: 0.25rem
+  space-sm: 0.5rem
+  space-md: 1rem
+  space-lg: 1.5rem
+  space-xl: 2.5rem
+---
+
+## Brand & Style
+
+This design system embodies a clean corporate editorial aesthetic tailored for high-velocity teams, strategic planners, and modern enterprise leadership. It combines the rigorous precision of an elite publication with the kinetic clarity of a real-time productivity workspace.
+
+### Core Tenets
+- **Editorial Authority:** Pure black titles set in gossamer, ultra-light sans-serif weights evoke print refinement and intellectual clarity.
+- **Electric Precision:** Interactive surfaces snap into focus through the signature OG1 Blue, creating unambiguous affordance amidst stark white planes.
+- **Tonal Warmth:** A foundation of calibrated warm grays tempers structural tension, ensuring extended sessions remain visually hospitable without sacrificing corporate rigor.
+- **Dual-Header Architecture:** Hierarchy is strictly delineated through stacked global orchestration and contextual module navigation.
+
+## Colors
+
+The palette operates on stark contrast balanced by soft architectural neutrals.
+
+- **Primary (`#0b41cd`):** "OG1 Blue." Reserved strictly for focused interactions, primary actions, active navigational states, and focus rings.
+- **Neutral Base:** Pure `#ffffff` defines primary canvases. `#dbd6d1` acts as hairline borders and structural dividers, while `#9d948e` and `#544f4f` handle secondary metadata and subdued copy.
+- **Headings & Text:** Pure black (`#000000`) for headers down to medium labels; body text rests at `#1a1a1a` to preserve contrast.
+- **Alert / Error (`#ff1f26`):** Critical status indicators, destructive confirmations, and input validation warnings.
+- **Atmospheric Gradient:** Hero surfaces utilize a linear top-down or diagonal shift from a warm linen tint (`#fbf9f7`) softening into a cool, luminous azure mist (`#f0f4ff`).
+
+## Typography
+
+The system uses **Outfit** for editorial display and headline hierarchies, pairing its geometric, open proportions at ultra-light weights (`200` and `300`) with pure `#000000` ink. This deliberate tension produces a razor-sharp, editorial tone.
+
+For sustained reading and data consumption, **Inter** serves as the utilitarian workhorse. It delivers optical clarity across high-density agile boards, tables, form components, and navigation structures.
+
+## Layout & Spacing
+
+The layout is structured around an adaptive 12-column grid anchored by a dual-tier navigation system:
+1. **Global Header:** Fixed 56px height, containing workspace switching, system-level search, and global actions.
+2. **Module Sub-Header:** 48px height, containing project filters, sprint views, view switchers, and localized deck controls.
+
+### Breakpoints & Flow
+- **Desktop (1200px+):** 12 columns, 24px gutters, 32px margins. Modules display parallel columns (e.g., Kanban boards, split preview panels).
+- **Tablet (768px – 1199px):** 8 columns, 16px gutters, 24px margins. Toolbars compress secondary actions into unified overflow menus.
+- **Mobile (<768px):** 4 columns, 12px gutters, 16px margins. Module headers switch from inline tabs to horizontally scrollable rails.
+
+## Elevation & Depth
+
+Visual hierarchy prioritizes surface boundaries over excessive shadow weight:
+
+- **Low-Contrast Outlines:** The primary separation method uses a 1px solid `#dbd6d1` border.
+- **Subtle Drop Shadows:** Reserved for elevated states, dropdown menus, flyouts, and floating sprint toolbars. Shadows are soft and diffused: `0 4px 16px -2px rgba(84, 79, 79, 0.06), 0 2px 6px -1px rgba(84, 79, 79, 0.04)`.
+- **Card States:** Resting cards sit flat with a 1px border. On drag or hover, elements translate `-2px` along the Y-axis and acquire an intensified warm-gray shadow: `0 8px 24px -4px rgba(84, 79, 79, 0.08)`.
+
+## Shapes
+
+The design system maintains an intentional **6px standard border radius** across all functional core primitives (inputs, buttons, chips, standard cards, and modals). This specific micro-radius produces a crisp, architectural silhouette that avoids clinical sharpness while resisting playful over-rounding.
+
+- Standard modules, buttons, and form inputs: `6px` (`rounded-sm`).
+- Outer application panels and dialog windows: `8px` (`rounded-md`).
+- Fully rounded pills are reserved exclusively for counter badges and live status dots.
+
+## Components
+
+### Buttons
+- **Primary:** Solid `#0b41cd` background, white text, 6px border radius, no border. Subtle brightness shift on hover (`#0935a8`).
+- **Secondary:** White background, 1px solid `#dbd6d1` border, `#1a1a1a` text. Hover shifts border color to `#9d948e`.
+- **Ghost / Link:** Transparent background, `#0b41cd` text, hover reveals a faint `#f0f4ff` tint.
+
+### Inputs & Form Controls
+- **Text Inputs:** 1px solid `#dbd6d1` container, 6px radius, pure white background. Focus applies an electric 1px border in `#0b41cd` along with a 2px outer ring of `rgba(11, 65, 205, 0.15)`.
+- **Error State:** Border becomes `#ff1f26`, paired with helper text in `#ff1f26`.
+
+### Cards & Deck Modules
+- **Deck Card:** `#ffffff` surface, 1px solid `#dbd6d1` border, 6px radius. Card header features light-weight Outfit typography with secondary metadata in `#544f4f`.
+- **Interactive Board Columns:** Transparent or soft linen-tinted backdrop with dashed `#dbd6d1` drop zones.
+
+### Chips & Badges
+- **Status Indicators:** Neutral states use `#fbf9f7` filled containers with `#544f4f` text.
+- **Active / Assigned:** Bordered in `#0b41cd` with `#0b41cd` typography at 500 weight.
+- **Bug / Alert:** Tinted `#fff1f1` background with `#ff1f26` text and border.
+
+### Headers
+- **Global Header:** Pure white background, bottom 1px border `#dbd6d1`. Houses brandmark and global navigation.
+- **Module Header:** Sits immediately below the global header, backed by a subtle `#faf8f6` to `#f4f6fc` micro-gradient or crisp white, separated by a 1px horizontal rule in `#dbd6d1`.

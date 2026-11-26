@@ -1,0 +1,195 @@
+@import "tailwindcss";
+
+:root {
+  /* Surfaces & Neutrals (docs/DESIGN.md §2.1) */
+  --color-white: #ffffff;
+  --color-roche-grey-050: #fbfbfa;
+  --color-roche-grey-075: #f1f0ef;
+  --color-background--default: #f5f5f2;
+  --color-roche-grey-100: #f5f5f2;
+  --color-background--soft: #fff7f5;
+  --color-neutral-100: #fff7f5;
+  --color-grey-200: #eae8e5;
+  --color-roche-grey-300: #dbd6d1;
+  --color-roche-grey-400: #c2bab5;
+
+  /* Text Hierarchy (docs/DESIGN.md §2.2) */
+  --color-text-primary: #000000;
+  --color-black-900: #000000;
+  --color-grey-900: #21201f;
+  --color-roche-grey-700: #544f4f;
+  --color-roche-grey-600: #706b69;
+  --color-grey-500: #9d948e;
+
+  /* Interactive & Semantic Colors (docs/DESIGN.md §2.3) */
+  --color-roche-blue-600: #0b41cd;
+  --color-interactive--primary-idle: #0b41cd;
+  --color-interactive--primary-hover: #052066;
+  --color-dark-blue-900: #022366;
+  --color-interactive--active: #5c80de;
+  --color-interactive--focus: #0b41cd;
+  --color-interactive--secondary-idle: #f5f5f2;
+  --color-interactive--secondary-hover: #d7e0f7;
+  --color-interactive--disabled: #eae8e5;
+  --color-border--default: #aec0ee;
+
+  --color-alert-success: #00724a;
+  --color-green-400: #00a17c;
+  --color-status--success: #00b458;
+  --color-alert-success-light: #d2f3e3;
+
+  --color-status--warning: #ffd60c;
+  --color-warning-light: #fff7ce;
+
+  --color-error: #ff1f26;
+  --color-alert-error: #b8002c;
+  --color-error-light: #ffd2d4;
+  --color-alert-error-light: #f8d1d8;
+
+  /* Radii & Opacity (docs/DESIGN.md §2.6 & §3) */
+  --radius-micro: 3px;
+  --radius-control: 6px;
+  --radius-feature: 17px;
+  --radius-pill: 50px;
+  --opacity-reduced: 0.62;
+
+  /* Editorial Gradients extracted from roche.com */
+  --background-aware-gradient-top-left: linear-gradient(
+    121.21deg,
+    #bde3ff -17.31%,
+    #fff7f5 46.37%,
+    #ffffff 65.87%
+  );
+  --background-aware-gradient-bottom-right: linear-gradient(
+    136.47deg,
+    #ffffff 35.41%,
+    #fff7f5 58%,
+    #bde3ff 128.14%
+  );
+}
+
+@theme {
+  --font-display: "Outfit", system-ui, -apple-system, sans-serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-og1-blue: #0b41cd;
+  --color-og1-blue-hover: #052066;
+  --color-og1-blue-deep: #022366;
+  --color-og1-blue-active: #5c80de;
+  --color-og1-blue-tint: #d7e0f7;
+  --color-og1-blue-border: #aec0ee;
+
+  --color-surface: #ffffff;
+  --color-surface-elevated: #fbfbfa;
+  --color-surface-low: #f5f5f2;
+  --color-surface-soft: #fff7f5;
+  --color-surface-disabled: #eae8e5;
+
+  --color-border-hairline: #dbd6d1;
+  --color-border-secondary: #c2bab5;
+
+  --color-ink-black: #000000;
+  --color-ink-primary: #21201f;
+  --color-ink-secondary: #544f4f;
+  --color-ink-aux: #706b69;
+  --color-ink-muted: #9d948e;
+
+  --color-alert-red: #ff1f26;
+  --color-alert-red-text: #b8002c;
+  --color-alert-bg: #ffd2d4;
+  --color-success-text: #00724a;
+  --color-success-dot: #00b458;
+  --color-success-bg: #d2f3e3;
+  --color-warning-border: #ffd60c;
+  --color-warning-bg: #fff7ce;
+}
+
+@layer base {
+  html,
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-surface);
+    color: var(--color-ink-primary);
+  }
+
+  h1,
+  h2,
+  h3,
+  .font-editorial {
+    font-family: var(--font-display);
+  }
+
+  button:focus-visible,
+  a:focus-visible,
+  select:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--color-interactive--focus);
+    outline-offset: 2px;
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom hairline scrollbars for high-density board & tables */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-roche-grey-300);
+  border-radius: var(--radius-micro);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-roche-grey-600);
+}
+
+/* Editorial atmospheric header & hero gradients (DESIGN.md / roche.com) */
+.bg-agile-header {
+  background: var(--background-aware-gradient-top-left);
+}
+
+.bg-agile-hero {
+  background: var(--background-aware-gradient-bottom-right);
+}
+
+/* Elevated card shadow on hover/drag */
+.shadow-agile-float {
+  box-shadow: 0 4px 16px -2px rgba(33, 32, 31, 0.07), 0 2px 6px -1px rgba(33, 32, 31, 0.04);
+}
+
+.shadow-agile-lift {
+  box-shadow: 0 8px 24px -4px rgba(33, 32, 31, 0.11), 0 2px 8px -1px rgba(33, 32, 31, 0.05);
+}
+
+/* Input focus & disabled state per DESIGN.md §2.3 & §3 */
+.og1-input:focus {
+  outline: none;
+  border-color: var(--color-interactive--focus);
+  box-shadow: 0 0 0 2px var(--color-interactive--secondary-hover);
+}
+
+.og1-input:disabled {
+  background-color: var(--color-interactive--disabled);
+  color: var(--color-roche-grey-600);
+  opacity: var(--opacity-reduced);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

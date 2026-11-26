@@ -1,0 +1,23 @@
+{
+  "skill_name": "extract-design-system",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Extraia o design system do site https://linear.app e gere os artefatos reutilizáveis para usarmos como referência visual.",
+      "expected_output": "Criação dos 4 arquivos (tokens.css, tokens.json, DESIGN.md e preview.html) em docs/design-system/linear-app/ com valores reais extraídos do DOM/CSS.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Preciso clonar a identidade visual, paleta de cores, tipografia e estilo de botões/cards da página https://ui.shadcn.com para reproduzir em um novo módulo.",
+      "expected_output": "Criação dos 4 arquivos (tokens.css, tokens.json, DESIGN.md e preview.html) em docs/design-system/ui-shadcn-com/ com estados interativos documentados e catálogo HTML funcional.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Documente o design system da nossa aplicação local em http://localhost:8000/board/default/ gerando o DESIGN.md, tokens e preview interativo.",
+      "expected_output": "Criação dos 4 arquivos (tokens.css, tokens.json, DESIGN.md e preview.html) em docs/design-system/localhost-board/ refletindo fielmente os estilos computados.",
+      "files": []
+    }
+  ]
+}

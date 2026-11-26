@@ -68,7 +68,7 @@ Substituir todos os placeholders `{{...}}` por valores reais do projeto.
 
 ### Etapa 5 — Publicação
 
-1. Salvar o `AGENTS.md` atualizado em `docs/AGENTS.md` e raiz `AGENTS.md`
+1. Salvar o `AGENTS.md` atualizado na raiz do projeto (`AGENTS.md`)
 2. Atualizar `docs/TO-DO.md` marcando a tarefa como concluída
 3. Confirmar publicação de skills: executar `scripts/sync-skills.sh` se necessário
 

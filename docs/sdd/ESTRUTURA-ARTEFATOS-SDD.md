@@ -15,9 +15,9 @@
 
 ```text
 projeto/
+├── AGENTS.md                     ← contrato operacional na raiz  (AGENTS-TEMPLATE)
 ├── docs/
 │   ├── GUIDELINE.md              ← AGNÓSTICO (copiar intacto)
-│   ├── AGENTS.md                 ← contrato operacional          (AGENTS-TEMPLATE)
 │   ├── TO-DO.md                  ← matriz, cobertura de RF, gate G2 (TO-DO-TEMPLATE)
 │   ├── PRD.md                    ← escopo funcional              (PRD-TEMPLATE)
 │   ├── SAD.md                    ← arquitetura e stack (§1–§13)  (SAD-TEMPLATE)
