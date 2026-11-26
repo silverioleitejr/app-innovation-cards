@@ -135,6 +135,7 @@ Na cópia inicial, a coluna Publicada fica `não`. Mude para `sim` só depois qu
 | migrate-radix-to-base | migrate-radix-to-base/SKILL.md | sim |
 | python-backend-architecture | python-backend-architecture/SKILL.md | sim |
 | sdd-extract-site-design | sdd-extract-site-design/SKILL.md | sim |
+| sdd-readme-writer | sdd-readme-writer/SKILL.md | sim |
 | shadcn | shadcn/SKILL.md | sim |
 | skill-creator | skill-creator/SKILL.md | sim |
 | ux-ascii-designer | ux-ascii-designer/SKILL.md | sim |
