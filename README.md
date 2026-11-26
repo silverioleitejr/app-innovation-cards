@@ -1,5 +1,19 @@
 # Innovation Board
 
+![Node.js](https://img.shields.io/badge/Node.js-22%2B-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-7.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=0B1220)
+![Vite](https://img.shields.io/badge/Vite-8.3-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Express](https://img.shields.io/badge/Express-4.21-000000?style=for-the-badge&logo=express&logoColor=white)
+![WebSocket](https://img.shields.io/badge/WebSocket-ws_8-010101?style=for-the-badge&logo=socketdotio&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-better--sqlite3-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![Motion](https://img.shields.io/badge/Motion-12-FFF312?style=for-the-badge&logo=framer&logoColor=0B1220)
+![Lucide](https://img.shields.io/badge/Lucide-Icons-F56565?style=for-the-badge&logo=lucide&logoColor=white)
+![jsPDF](https://img.shields.io/badge/jsPDF-4.2-EC1C24?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)
+![Google GenAI](https://img.shields.io/badge/Google_GenAI-SDK-4285F4?style=for-the-badge&logo=googlegemini&logoColor=white)
+![SDD](https://img.shields.io/badge/Metodologia-SDD-0B41CD?style=for-the-badge)
+
 Aplicação colaborativa em tempo real para condução de sessões de inovação em **Dados, Analytics e IA**, desenvolvida sob a metodologia **Spec-Driven Development (SDD)**.
 
 - **Repositório:** https://github.com/silverioleitejr/app-innovation-cards
