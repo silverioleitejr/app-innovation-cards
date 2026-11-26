@@ -17,6 +17,8 @@ data/
 *.db-journal
 
 # Logs & Temporary Runtime Outputs
+app-start.log
+.app-start-*.tmp.log
 *.log
 server_output.txt
 page.txt
