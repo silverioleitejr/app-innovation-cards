@@ -1,155 +1,140 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Innovation Board
 
-# Run and deploy your AI Studio app
+Aplicação colaborativa em tempo real para condução de sessões de inovação em **Dados, Analytics e IA**, desenvolvida sob a metodologia **Spec-Driven Development (SDD)**.
 
-This contains everything you need to run your app locally.
+- **Repositório:** https://github.com/silverioleitejr/app-innovation-cards
+- **Contrato Operacional SDD:** [AGENTS.md](./AGENTS.md) · [docs/GUIDELINE.md](./docs/GUIDELINE.md)
+- **Identidade Visual:** [docs/DESIGN.md](./docs/DESIGN.md) · [docs/design-tokens.json](./docs/design-tokens.json)
 
-View your app in AI Studio: https://ai.studio/apps/dafe8179-dec9-4c37-8401-502750b21258
+---
 
-## Run Locally
+## 1. Visão Geral das Funcionalidades
 
-**Prerequisites:** Node.js (v22 or superior) and `tsx` (v4.x)
+- **Funil Colaborativo em 3 Etapas (`Painel`):**
+  1. `01. Pitch & Ideia` — Registro rápido (inclusive via *Card Inline* clicando diretamente na coluna) e votação da sessão.
+  2. `02. Avaliação Técnica & Valor` — Indicador de prontidão (`0/3` a `3/3`) e atalho para a Matriz.
+  3. `03. Backlog & Priorização` — Protegida pela **Trava de Qualidade (`3/3`)** (*Arquitetura e Solução Técnica*, *Critérios de Sucesso do MVP* e *Líder Técnico Responsável*).
+- **Matriz Esforço × Benefício (`Matriz`):** Posicionamento espacial contínuo `(posX, posY)` em 4 quadrantes (*Ganhos Rápidos*, *Projetos Estruturantes*, *Melhorias Contínuas* e *Icebox*) com cursores remotos ao vivo.
+- **Editor Estruturado com Salvamento Automático (`CardDrawer`):** Autosave silencioso no servidor (`900 ms`) para cartões existentes com *flush* ao fechar e rascunho local (`500 ms` em `localStorage`) para novas ideias.
+- **Votação Controlada por Sessão e Pins (`Voto +1` + Reações):** Limite de 1 `Voto +1` por participante por sessão aberta, rodapé administrativo (`Abrir/Fechar Votação`, `Apurar Votos`, `Mover Ideias Top 5 → Avaliação Técnica`) e exportação das **Tops 5 Ideias** em `.csv` e `.pdf`.
+- **Histórico de Sessões (`Sessões`):** Registro consolidado de data, início/término, duração, presentes/ausentes e links clicáveis por ID para ideias novas, votadas, avaliadas e promovidas ao Backlog.
+- **Governança RBAC, Autenticação Híbrida e Auditoria (`Usuários` & `Auditoria`):** Perfis `ADMIN`, `FACILITATOR`, `MEMBER` e `VIEWER`, login local/auto-registro/SSO federado unificado por e-mail, carga em lote atômica (`JSON`/`CSV`) e trilha de auditoria *append-only* encadeada com `SHA-256`.
 
-### 1. Install Dependencies
+---
+
+## 2. Stack Tecnológica e Identidade Visual
+
+| Camada | Tecnologia | Papel |
+|---|---|---|
+| **Runtime & API** | Node.js 22 + Express 4 + `tsx` | Servidor HTTP unificado (`/api/*`) na porta `3000` |
+| **Tempo Real** | `ws` (`/ws`) | Presença ao vivo, cursores efêmeros e sincronização de cards/votação |
+| **Frontend SPA** | React 19 + TypeScript 7 + Vite 8 | Interface reativa em `middlewareMode` com animações `motion` |
+| **Design System** | Tailwind CSS v4 + `docs/DESIGN.md` | Tokens extraídos via `sdd-extract-site-design` (`roche.com`), tipografia `Outfit`, `Plus Jakarta Sans` e `JetBrains Mono` (`tabular-nums`) |
+| **Persistência** | SQLite (`better-sqlite3`) | Transações síncronas ACID em `db/db.ts` (`db/innovation-board.db`) |
+| **Exportação** | `jspdf` + gerador CSV UTF-8 BOM | Relatórios executivos client-side do ranking Top 5 |
+
+---
+
+## 3. Como Executar Localmente
+
+### Pré-requisitos
+- **Node.js** `v22+` e **npm**
+
+### Passo 1 — Instalar dependências
 
 ```bash
 npm install
 ```
 
-### 2. Configure Environment Variables
+### Passo 2 — Configurar variáveis de ambiente (opcional)
 
-Copy the `.env.example` file and set your Gemini API key:
+Copie `.env.example` para `.env` caso necessário (nunca versione `.env`):
 
 ```bash
-cp .env.example .env.local
+cp .env.example .env
 ```
 
-Then edit `.env.local` and set:
-
-```env
-GEMINI_API_KEY=sua-chave-da-google-ai-studio
-APP_URL=http://localhost:3000
-```
-
-**Note:** The AI Studio automatically injects `GEMINI_API_KEY` at runtime from user secrets. If you're running locally, you need to provide it in the `.env.local` file.
-
-### 3. Initialize the Database and Seed Data
-
-The application automatically initializes the SQLite database on first run. The following seed functions are executed:
-
-- `seedInitialData()` - Carga inicial de usuários e cartões
-- `seedInitialPinsIfEmpty()` - Pins iniciais se não existirem
-- `seedAdditionalPitchCardsOnce()` - Cartões adicionais de pitch
-
-### 4. Run the Application
+### Passo 3 — Iniciar a aplicação
 
 ```bash
 npm run dev
+# ou diretamente:
+npx tsx server.ts
 ```
 
-This starts the development server with:
-- **Vite** dev server on port `3000`
-- **Express** API on port `3000`
-- **WebSocket** server on `/ws` endpoint
-- **Vite middleware** for HMR and SPA serving
+Na primeira execução, o banco SQLite (`db/innovation-board.db`) é inicializado automaticamente com os *seeds* idempotentes de usuários de demonstração (senha inicial `og1@2026`), cartões e pins.
 
-The console will show when the server is ready.
+### Passo 4 — Acessar e validar
 
-### 4. Access the Application
-
-Once the server is running, access:
-
-- **Frontend (SPA):** http://localhost:3000
-  - Innovation Board collaborative board
-  - Login, auto-register, or federated login
-  
-- **Health Check:** http://localhost:3000/api/health
-  - Returns `{ "status": "ok" }` if the server is running correctly
-  
-- **API Base:** http://localhost:3000/api/*
-  - All REST API endpoints
-  
-- **WebSocket:** ws://localhost:3000/ws
-  - Real-time collaboration (presence, cursors, card mutations)
-  
-- **AI Studio:** https://ai.studio/apps/dafe8179-dec9-4c37-8401-502750b21258
-  - View and manage the app in Google AI Studio
-
-### 5. Available Scripts
-
-| Script | Description |
-|--------|-------------|
-| `npm run dev` | Start development server (Vite + Express + WS) |
-| `npm run start` | Start production server (node server.js) |
-| `npm run build` | Build for production (`vite build`) |
-| `npm run preview` | Preview production build |
-| `npm run lint` | Run TypeScript typecheck (`tsc --noEmit`) |
-| `npm run test` | Run tests (configured in package.json) |
-
-### 6. Project Structure
-
-```
-C:\@projetos\app-innovation-cards/
-├─ .env.example          # Environment variables template
-├─ .gitignore
-├─ index.html
-├─ metadata.json
-├─ package.json
-├─ PRD.md                # Product Requirements Document
-├─ README.md             # This file
-├─ SAD.md                # Architecture & Stack decisions
-├─ server.ts             # Main Express + WebSocket server
-├─ src/
-│  ├─ App.tsx           # App orchestration + optimistic updates
-│  ├─ components/       # React UI components
-│  ├─ hooks/            # Custom React hooks (useRealtimeBoard, api.ts)
-│  └─ lib/              # Utility functions (api.ts, exportTopIdeas.ts)
-├─ data/                 # SQLite database (innovation-board.db)
-├─ bun.lock
-├─ tsconfig.json
-└─ vite.config.ts
-```
-
-### 7. Development Flow
-
-Following **Spec-Driven Development (SDD)**:
-
-1. **Explore**: Check `TO-DO.md` for current tasks and SDD package status
-2. **Plan**: Review `PRD.md` for requirements, `GUIDELINE.md` for methodology
-3. **Execute**: Implement features following the `AGENTS.md` operational contract
-4. **Verify**: Run `npm run lint` and `npm run test`
-5. **Deliver**: Update `TO-DO.md` and create PR with Conventional Commits
-
-### 8. Access Credentials
-
-- **Demo accounts** are automatically seeded on first run
-- **Login**: Use the auth screen or federated login (Microsoft Entra ID, Google Workspace)
-- **Auto-registration**: New users receive default `MEMBER` role on first login
-
-### 9. Server Architecture
-
-The application uses a **monolithic modular full-stack** architecture on a single process (port 3000):
-
-```
-┌────────────────────────────────────────────────────────────────────────────┐
-│ 1. Apresentação (React SPA)                                       │
-│    BoardFunnelView, MatrixCanvasView, SessionsView, UsersAdminView    │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 2. Estado, Tempo Real e Cliente HTTP                               │
-│    App.tsx, useRealtimeBoard.ts, api.ts                             │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 3. Aplicação, Domínio e API                                       │
-│    server.ts, types.ts                                              │
-│    RBAC, Motor de Regras, Votação, Snapshot de Sessões              │
-├────────────────────────────────────────────────────────────────────────────┤
-│ 4. Persistência e Auditoria                                       │
-│    server/db.ts — SQLite ACID                                       │
-│    users, sessions, cards, card_pins, board_voting_state             │
-└────────────────────────────────────────────────────────────────────────────┘
-```
+- **Aplicação Web:** http://localhost:3000
+- **Healthcheck:** http://localhost:3000/api/health (`{"status":"ok"}`)
+- **WebSocket:** `ws://localhost:3000/ws`
 
 ---
 
-**Dúvidas?** Consulte `SAD.md` (arquitetura), `PRD.md` (requisitos) e `GUIDELINE.md` (metodologia).
+## 4. Scripts Disponíveis
+
+| Script | Comando | Descrição |
+|---|---|---|
+| `npm run dev` | `tsx server.ts` | Inicia servidor unificado Express + Vite + WebSocket na porta `3000` |
+| `npm run build` | `vite build` | Gera o bundle de produção do frontend em `dist/` |
+| `npm run lint` | `tsc --noEmit` | Executa verificação global de tipos TypeScript (`0` erros) |
+| `npm run start` | `node server.ts` | Executa o servidor em modo de produção |
+| `npm run preview` | `vite preview` | Pré-visualiza o build estático gerado |
+
+---
+
+## 5. Estrutura do Projeto e Ordem de Leitura SDD
+
+```text
+app-innovation-cards/
+├── AGENTS.md                        # Contrato operacional dos agentes (raiz)
+├── docs/
+│   ├── GUIDELINE.md                 # Metodologia SDD e Ordem de Leitura Canônica (§4)
+│   ├── TO-DO.md                     # Matriz de rastreabilidade e status de pacotes/melhorias
+│   ├── PRD.md                       # Escopo funcional aprovado (RF-01 a RF-11)
+│   ├── SAD.md                       # Arquitetura em camadas, segurança e ADRs (ADR-001..007)
+│   ├── ADR.md                       # Índice e registros operacionais de decisões
+│   ├── DATABASE-PATTERN.md          # Convenções SQLite, auditoria e transações
+│   ├── NAMING-CONVENTION.md         # Convenções de código, banco, branches e commits
+│   ├── DESIGN.md                    # Identidade visual e tokens aplicados nas páginas
+│   ├── design-tokens.json           # JSON bruto extraído via sdd-extract-site-design
+│   ├── GLOSSARY.md                  # Vocabulário oficial de domínio
+│   ├── templates/                   # Templates mestres SDD
+│   ├── skills/                      # Fonte da verdade das skills SDD (sdd-*)
+│   └── sdd/                         # Pacotes de especificação (NN-slug/)
+├── .agents/
+│   └── skills/                      # Skills publicadas para execução agêntica
+├── db/
+│   └── db.ts                        # Schema SQLite, migrações idempotentes e seeds
+├── src/
+│   ├── App.tsx                      # Orquestração de estado, presença e navegação global
+│   ├── index.css                    # Variáveis CSS (:root / @theme) de DESIGN.md
+│   ├── types.ts                     # Contratos de domínio compartilhados cliente/servidor
+│   ├── components/                  # Páginas e modais (Auth, Painel, Matriz, Sessões, Auditoria, Usuários, Drawer)
+│   ├── hooks/                       # WebSocket resiliente e hooks compartilhados de pins/voto
+│   └── lib/                         # Cliente HTTP autenticado e exportação CSV/PDF
+└── server.ts                        # API REST Express, RBAC, motor de votação e hub WebSocket
+```
+
+### Ordem de Leitura Canônica (`docs/GUIDELINE.md` §4)
+1. `docs/GUIDELINE.md`
+2. `AGENTS.md`
+3. `docs/TO-DO.md`
+4. `docs/PRD.md`
+5. `docs/SAD.md`
+6. `docs/ADR.md`
+7. `docs/DATABASE-PATTERN.md`
+8. `docs/NAMING-CONVENTION.md`
+9. `docs/DESIGN.md`
+10. `docs/sdd/NN-slug/` *(apoio de vocabulário sob demanda: `docs/GLOSSARY.md`)*
+
+---
+
+## 6. Principais Skills SDD Disponíveis
+
+- **`sdd-workflow`:** coordenação das etapas SDD e verificação de gates de aprovação.
+- **`sdd-structure-validator`:** auditoria somente-leitura da estrutura de pastas, fundação e pacotes.
+- **`sdd-extract-site-design`:** extração determinística de tokens visuais (`extrair_design_tokens`) a partir de uma URL com consolidação em `docs/DESIGN.md`.
+- **`sdd-app-start`:** inicialização e verificação automatizada dos serviços definidos em `docs/SAD.md`.
+- **`sdd-planner-writer` / `sdd-testcase-writer` / `sdd-developer`:** planejamento técnico, especificação de casos de teste e implementação orientada a specs aprovadas.
